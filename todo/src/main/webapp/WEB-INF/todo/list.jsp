@@ -15,7 +15,6 @@
 <body>
     <h1>Todo List</h1>
     <a href="/todo/register">등록하러 가기</a>
-    ${name}
     <ul>
         <c:forEach items="${todos}" var="todo">
             <li>${todo}</li>

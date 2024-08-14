@@ -13,12 +13,10 @@ import java.util.List;
 @WebServlet(name = "todoListController", urlPatterns = "/todo/list")
 public class TodoListController extends HttpServlet {
     public static List<String> todos = new ArrayList<>();
-    public static String name = "asdf";
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
 
-        req.setAttribute("name", name);
         req.setAttribute("todos", todos);
         RequestDispatcher rd = req.getRequestDispatcher("/WEB-INF/todo/list.jsp");
         rd.forward(req, res);
