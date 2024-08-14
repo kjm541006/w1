@@ -19,7 +19,7 @@ public class TodoRegisterController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
         String title = req.getParameter("title");
-        TodoListController.addTodos(title);
+//        TodoListController.addTodos(title);
         res.sendRedirect("/todo/list");
     }
 }
