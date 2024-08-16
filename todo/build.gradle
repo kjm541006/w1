@@ -29,6 +29,7 @@ dependencies {
 
     implementation 'javax.servlet.jsp.jstl:javax.servlet.jsp.jstl-api:1.2.2'
     implementation 'org.glassfish.web:javax.servlet.jsp.jstl:1.2.5'
+
 }
 
 test {
