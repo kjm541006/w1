@@ -1,7 +1,16 @@
 package org.zerock.todo.dto;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
 import java.time.LocalDate;
 
+@Builder
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class TodoDTO {
 
     private long tno;
@@ -12,45 +21,5 @@ public class TodoDTO {
 
     private boolean completed;
 
-    public long getTno() {
-        return tno;
-    }
 
-    public void setTno(long tno) {
-        this.tno = tno;
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
-    public LocalDate getDueDate() {
-        return dueDate;
-    }
-
-    public void setDueDate(LocalDate dueDate) {
-        this.dueDate = dueDate;
-    }
-
-    public boolean isCompleted() {
-        return completed;
-    }
-
-    public void setCompleted(boolean completed) {
-        this.completed = completed;
-    }
-
-    @Override
-    public String toString() {
-        return "TodoDTO{" +
-                "tno=" + tno +
-                ", title='" + title + '\'' +
-                ", dueDate=" + dueDate +
-                ", completed=" + completed +
-                '}';
-    }
 }
