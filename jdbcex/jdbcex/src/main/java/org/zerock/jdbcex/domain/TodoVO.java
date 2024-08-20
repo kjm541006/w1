@@ -15,7 +15,7 @@ public class TodoVO {
 
     private String title;
 
-    private LocalDate localDate;
+    private LocalDate dueDate;
 
-    private Boolean completed;
+    private boolean completed;
 }
