@@ -65,7 +65,7 @@
                         Featured
                     </div>
                     <div class="card-body">
-                        <form action="/todo/remove" method="post">
+                        <form method="post" class="form">
 
                         <div class="input-group mb-3">
                             <span class="input-group-text">TNO</span>
@@ -93,7 +93,7 @@
 
                         <div class="my-4">
                             <div class="float-end">
-                                <button type="submit" class="btn btn-danger">Remove</button>
+                                <button type="button" class="btn btn-danger">Remove</button>
                                 <button type="button" class="btn btn-primary">Modify</button>
                                 <button type="button" class="btn btn-secondary">List</button>
                             </div>
@@ -117,7 +117,29 @@
         </div>
     </div>
 </div>
+<script>
+    const formObj = document.querySelector(".form");
 
+    document.querySelector(".btn-danger").addEventListener("click", function(e){
+        e.preventDefault();
+        e.stopPropagation();
+
+        formObj.action = "/todo/remove"
+        formObj.method = "POST"
+
+        formObj.submit();
+    }, false);
+
+    document.querySelector(".btn-primary").addEventListener("click", function(e){
+        e.preventDefault();
+        e.stopPropagation();
+
+        formObj.action = "/todo/modify"
+        formObj.method = "POST"
+
+        formObj.submit();
+    }, false);
+</script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 </body>
 </html>
