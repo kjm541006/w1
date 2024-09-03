@@ -1,5 +1,6 @@
 package org.zerock.springex.controller;
 
+import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -8,12 +9,16 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.zerock.springex.dto.TodoDTO;
+import org.zerock.springex.service.TodoService;
 
 import java.time.LocalDate;
 
 @Controller
 @Log4j2
+@RequiredArgsConstructor
 public class SampleController {
+
+    private final TodoService todoService;
 
     @GetMapping("/hello")
     public void hello(){
@@ -65,6 +70,14 @@ public class SampleController {
     public void ex7(String p1, int p2){
         log.info("p1..........." + p1);
         log.info("p2..........." + p2);
+    }
+
+    @GetMapping("/ex8")
+    public void ex8(Long tno, Model model){
+
+        TodoDTO todoDTO = todoService.getOne(tno);
+
+        model.addAttribute("dto", todoDTO);
     }
 
 }

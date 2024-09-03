@@ -22,6 +22,8 @@ public class TodoServiceImpl implements TodoService{
 
     private final TodoMapper todoMapper;
 
+
+    // insert
     @Override
     public void register(TodoDTO todoDTO) {
 
@@ -75,6 +77,7 @@ public class TodoServiceImpl implements TodoService{
         todoMapper.delete(tno);
     }
 
+    // update
     public void modify(TodoDTO todoDTO){
 
         TodoVO todoVO = modelMapper.map(todoDTO, TodoVO.class);
