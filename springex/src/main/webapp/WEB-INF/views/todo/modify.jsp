@@ -66,6 +66,8 @@
                     </div>
                     <div class="card-body">
                         <form method="post" class="form">
+                            <input type="hidden" name="page" value="${pageRequestDTO.page}">
+                            <input type="hidden" name="size" value="${pageRequestDTO.size}">
 
                         <div class="input-group mb-3">
                             <span class="input-group-text">TNO</span>
@@ -138,6 +140,13 @@
         formObj.method = "POST"
 
         formObj.submit();
+    }, false);
+
+    document.querySelector(".btn-secondary").addEventListener("click", function(e){
+        e.preventDefault();
+        e.stopPropagation();
+
+        self.location = '/todo/list?${pageRequestDTO.link}';
     }, false);
 </script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
