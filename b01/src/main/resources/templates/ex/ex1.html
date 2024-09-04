@@ -5,8 +5,23 @@
     <title>Title</title>
 </head>
 <body>
-<h4>[[${list}]]</h4>
-<hr>
-<h4 th:text="${list}"></h4>
+<!-- 반복 처리 1: th:each -->
+<ul>
+    <li th:each="str: ${list}" th:text="${str}"></li>
+</ul>
+
+<!-- 반복 처리 2: <th:block> -->
+<ul>
+    <th:block th:each="str: ${list}">
+        <li>[[${str}]]</li>
+    </th:block>
+</ul>
+
+<!-- 반복문 status 변수 -->
+<ul>
+    <li th:each="str, status: ${list}">
+        [[${status.index}]] -- [[${str}]]
+    </li>
+</ul>
 </body>
 </html>
