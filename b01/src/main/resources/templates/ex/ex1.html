@@ -50,5 +50,12 @@
     </li>
 </ul>
 
+<!-- 링크 처리 -->
+<a th:href="@{/hello}">Go to /hello</a>
+<br>
+
+<!-- 링크 쿼리 스트링 처리 -->
+<a th:href="@{/hello(name='AAA', age=16)}">Go to /hello?name=AAA&age=16</a>
+
 </body>
 </html>
