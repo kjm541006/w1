@@ -66,8 +66,6 @@
                     </div>
                     <div class="card-body">
                         <form method="post" class="form">
-                            <input type="hidden" name="page" value="${pageRequestDTO.page}">
-                            <input type="hidden" name="size" value="${pageRequestDTO.size}">
 
                         <div class="input-group mb-3">
                             <span class="input-group-text">TNO</span>
@@ -126,7 +124,7 @@
         e.preventDefault();
         e.stopPropagation();
 
-        formObj.action = "/todo/remove"
+        formObj.action = `/todo/remove?${pageRequestDTO.link}`
         formObj.method = "POST"
 
         formObj.submit();
