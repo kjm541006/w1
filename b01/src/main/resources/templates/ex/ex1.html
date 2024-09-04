@@ -56,6 +56,10 @@
 
 <!-- 링크 쿼리 스트링 처리 -->
 <a th:href="@{/hello(name='AAA', age=16)}">Go to /hello?name=AAA&age=16</a>
+<br>
+
+<!-- 링크 값이 배열과 같이 여러 개일 때-->
+<a th:href="@{/hello(types=${ {'AA','BB','CC'} }, age= 16)}">Go to /hello?types=AA&types=BB&types=CC&age=16</a>
 
 </body>
 </html>
