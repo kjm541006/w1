@@ -13,7 +13,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 public class BoardDTO {
 
-    private Long tno;
+    private Long bno;
 
     private String title;
 
