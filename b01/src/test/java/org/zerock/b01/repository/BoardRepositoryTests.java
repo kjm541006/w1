@@ -1,5 +1,6 @@
 package org.zerock.b01.repository;
 
+import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,10 +17,10 @@ import java.util.stream.IntStream;
 
 @SpringBootTest
 @Log4j2
+@RequiredArgsConstructor
 public class BoardRepositoryTests {
 
-    @Autowired
-    private BoardRepository boardRepository;
+    private final BoardRepository boardRepository;
 
     @Test
     public void testInsert(){
@@ -112,6 +113,28 @@ public class BoardRepositoryTests {
         log.info(result.getNumber());
 
         log.info(result.hasPrevious() + ": " + result.hasNext());
+
+        result.getContent().forEach(board -> log.info(board));
+    }
+
+    @Test
+    public void testSearchAll2(){
+
+        String[] types = {"t", "c", "w"};
+
+        String keyword = "1";
+
+        Pageable pageable = PageRequest.of(0, 10, Sort.by("bno").descending());
+
+        Page<Board> result = boardRepository.searchAll(types, keyword, pageable);
+
+        log.info(result.getTotalPages());
+
+        log.info(result.getSize());
+
+        log.info(result.getNumber());
+
+        log.info(result.hasPrevious() +":" + result.hasNext());
 
         result.getContent().forEach(board -> log.info(board));
     }

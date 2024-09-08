@@ -78,9 +78,13 @@ public class BoardServiceImpl implements BoardService{
 
         Page<Board> result = boardRepository.searchAll(types, keyword, pageable);
 
+        log.info(result.getContent());
+
         List<BoardDTO> dtoList = result.getContent().stream()
                 .map(board -> modelMapper.map(board, BoardDTO.class))
                 .collect(Collectors.toList());
+
+        log.info(dtoList);
 
         return PageResponseDTO.<BoardDTO>withAll()
                 .pageRequestDTO(pageRequestDTO)
