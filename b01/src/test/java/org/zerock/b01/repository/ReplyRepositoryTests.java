@@ -1,5 +1,6 @@
 package org.zerock.b01.repository;
 
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.junit.jupiter.api.Test;
@@ -35,6 +36,7 @@ public class ReplyRepositoryTests {
         replyRepository.save(reply);
     }
 
+    @Transactional
     @Test
     public void testBoardReplies(){
 
