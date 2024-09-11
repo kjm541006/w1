@@ -18,10 +18,14 @@ public class Reply extends BaseEntity{
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long rno;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     private Board board;
 
     private String replyText;
 
     private String replyer;
+
+    public void changeText(String text){
+        this.replyText = text;
+    }
 }
