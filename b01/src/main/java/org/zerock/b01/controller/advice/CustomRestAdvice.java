@@ -34,4 +34,17 @@ public class CustomRestAdvice {
         }
         return ResponseEntity.badRequest().body(errorMap);
     }
+
+    @ExceptionHandler(BindException.class)
+    @ResponseStatus(HttpStatus.EXPECTATION_FAILED)
+    public ResponseEntity<Map<String, String>> handleBindException(Exception e){
+
+        log.error(e);
+
+        Map<String, String> errorMap = new HashMap<>();
+
+        errorMap.put("time", ""+System.currentTimeMillis());
+        errorMap.put("msg", "constraint fails");
+        return ResponseEntity.badRequest().body(errorMap);
+    }
 }
