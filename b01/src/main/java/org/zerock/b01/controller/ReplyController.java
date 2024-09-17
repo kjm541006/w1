@@ -43,12 +43,21 @@ public class ReplyController {
 
         return resultMap;
     }
-//
-//    @Operation(summary = "Replies of Board", description = "GET 방식으로 특정 게시물의 댓글 목록")
-//    @GetMapping(value = "/list/{bno}")
-//    public PageResponseDTO<ReplyDTO> getList(@PathVariable("bno") Long bno, PageRequestDTO pageRequestDTO){
-//        PageResponseDTO<ReplyDTO> responseDTO = replyService.getListOfBoard(bno, pageRequestDTO);
-//
-//        return responseDTO;
-//    }
+
+    @Operation(summary = "Replies of Board", description = "GET 방식으로 특정 게시물의 댓글 목록")
+    @GetMapping(value = "/list/{bno}")
+    public PageResponseDTO<ReplyDTO> getList(@PathVariable("bno") Long bno, PageRequestDTO pageRequestDTO){
+        PageResponseDTO<ReplyDTO> responseDTO = replyService.getListOfBoard(bno, pageRequestDTO);
+
+        return responseDTO;
+    }
+
+    @Operation(summary = "Read Reply", description = "GET 방식으로 특정 댓글 조회")
+    @GetMapping("/{rno}")
+    public ReplyDTO getReplyDTO(@PathVariable("rno") Long rno){
+
+        ReplyDTO replyDTO = replyService.read(rno);
+
+        return replyDTO;
+    }
 }
