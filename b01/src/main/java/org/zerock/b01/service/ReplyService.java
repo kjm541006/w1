@@ -12,7 +12,7 @@ public interface ReplyService {
 
     void modify(ReplyDTO replyDTO);
 
-    void delete(Long rno);
+    void remove(Long rno);
 
     PageResponseDTO<ReplyDTO> getListOfBoard(Long bno, PageRequestDTO pageRequestDTO);
 }

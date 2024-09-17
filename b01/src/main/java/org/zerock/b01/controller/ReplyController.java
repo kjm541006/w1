@@ -60,4 +60,17 @@ public class ReplyController {
 
         return replyDTO;
     }
+
+    @Operation(summary = "Delete Reply", description = "DELETE 방식으로 특정 댓글 삭제")
+    @DeleteMapping("/{rno}")
+    public Map<String, Long> remove(@PathVariable("rno") Long rno){
+
+        replyService.remove(rno);
+
+        Map<String, Long> resultMap = new HashMap<>();
+
+        resultMap.put("rno", rno);
+
+        return resultMap;
+    }
 }
