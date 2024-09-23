@@ -17,6 +17,6 @@ public class MemberListControllerV4 implements ControllerV4 {
         List<Member> members = memberRepository.findAll();
         model.put("members", members);
 
-        return "";
+        return "members";
     }
 }
