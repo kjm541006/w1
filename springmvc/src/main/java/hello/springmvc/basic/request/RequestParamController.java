@@ -92,6 +92,12 @@ public class RequestParamController {
         return "ok";
     }
 
+    /**
+     *  -- @ModelAttribute --
+     * @RequestParam 으로 받아와서 객체에 setter를 사용해 저장해야 했으나
+     * @ModelAttribute를 사용하면 자동으로 위 작업을 처리함
+     */
+
     @ResponseBody
     @RequestMapping("/model-attribute-v1")
     public String modelAttributeV1(@ModelAttribute HelloData helloData){
