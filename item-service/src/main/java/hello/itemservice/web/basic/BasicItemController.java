@@ -30,7 +30,7 @@ public class BasicItemController {
         Item item = itemRepository.findById(itemId);
         model.addAttribute("item", item);
 
-        return "/basic/item";
+        return "basic/item";
 
     }
 
@@ -40,10 +40,53 @@ public class BasicItemController {
         return "basic/addForm";
     }
 
-    @PostMapping("/add")
-    public String save(){
+    // @PostMapping("/add")
+    public String addItemV1(@RequestParam String itemName,
+                       @RequestParam Integer price,
+                       @RequestParam Integer quantity,
+                       Model model){
 
-        return "basic/addForm";
+        Item item = new Item();
+        item.setItemName(itemName);
+        item.setPrice(price);
+        item.setQuantity(quantity);
+
+        itemRepository.save(item);
+
+        model.addAttribute("item", item);
+
+        return "basic/item";
+    }
+
+    // @PostMapping("/add")
+    public String addItemV2(@ModelAttribute("item") Item item){
+        itemRepository.save(item);
+        // model.addAttribute("item", item); // @ModelAttribute에서 자동 추가 (생략 가능)
+
+        return "basic/item";
+    }
+
+    /**
+     * @ModelAttribute의 이름을 생략할 경우 클래스명의 앞글자를 소문자로 바꿔서 자동 적용
+     * 아래에서는 Item -> item
+     * 즉 addItemV2 메서드와 같음
+     */
+    //@PostMapping("/add")
+    public String addItemV3(@ModelAttribute Item item){
+        itemRepository.save(item);
+
+        return "basic/item";
+    }
+
+    /**
+     * 클래스를 매개변수로 받으므로
+     * @ModelAttribute 생략 가능
+     */
+    @PostMapping("/add")
+    public String addItemV4(Item item){
+        itemRepository.save(item);
+
+        return "basic/item";
     }
 
     /**
