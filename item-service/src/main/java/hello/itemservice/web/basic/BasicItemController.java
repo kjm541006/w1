@@ -82,11 +82,19 @@ public class BasicItemController {
      * 클래스를 매개변수로 받으므로
      * @ModelAttribute 생략 가능
      */
-    @PostMapping("/add")
+    // @PostMapping("/add")
     public String addItemV4(Item item){
         itemRepository.save(item);
 
         return "basic/item";
+    }
+
+    // PRG 패턴 적용
+    @PostMapping("/add")
+    public String addItemV5(Item item){
+        itemRepository.save(item);
+
+        return "redirect:/basic/items/" + item.getId();
     }
 
     @GetMapping("/{itemId}/edit")
