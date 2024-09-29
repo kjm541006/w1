@@ -1,6 +1,5 @@
 package study.project1.repository;
 
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import study.project1.domain.Item;
@@ -8,7 +7,6 @@ import study.project1.domain.Item;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.*;
-import static org.junit.jupiter.api.Assertions.*;
 
 class ItemRepositoryImplTest {
 
