@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import study.project1.domain.Item;
 import study.project1.repository.ItemRepositoryImpl;
 
+import java.util.List;
+
 @Controller
 @Slf4j
 @RequestMapping("/items")
@@ -18,7 +20,9 @@ public class ItemController {
     ItemRepositoryImpl itemRepository = new ItemRepositoryImpl();
 
     @GetMapping
-    public String list(){
+    public String list(Model model){
+        List<Item> itemList = itemRepository.findAll();
+        model.addAttribute("itemList", itemList);
 
         return "/items/list";
     }
