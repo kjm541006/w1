@@ -4,9 +4,8 @@ import jakarta.annotation.PostConstruct;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import study.project1.domain.Item;
 import study.project1.repository.ItemRepositoryImpl;
 
@@ -34,6 +33,23 @@ public class ItemController {
         model.addAttribute("item", findItem);
 
         return "/items/item";
+    }
+
+    @GetMapping("/add")
+    public String addForm(){
+
+        return "/items/add";
+    }
+
+    @PostMapping("/add")
+    public String addItem(Item item, RedirectAttributes redirectAttributes){
+        // 추가 기능 구현
+        log.info("추가");
+        Item savedItem = itemRepository.save(item);
+        redirectAttributes.addAttribute("itemId", savedItem.getId());
+        redirectAttributes.addAttribute("status", true);
+
+        return "redirect:/items/{itemId}";
     }
 
 
