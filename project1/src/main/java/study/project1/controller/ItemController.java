@@ -52,6 +52,21 @@ public class ItemController {
         return "redirect:/items/{itemId}";
     }
 
+    @GetMapping("/{itemId}/edit")
+    public String updateForm(@PathVariable Long itemId, Model model){
+        Item findItem = itemRepository.find(itemId);
+        model.addAttribute("item", findItem);
+
+        return "/items/edit";
+    }
+
+    @PostMapping("/{itemId}/edit")
+    public String updateItem(@PathVariable Long itemId, Item item){
+        itemRepository.update(itemId, item);
+
+        return "redirect:/items/{itemId}";
+    }
+
 
     @PostConstruct
     public void init(){
