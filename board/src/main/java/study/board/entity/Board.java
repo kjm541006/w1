@@ -22,6 +22,6 @@ public class Board {
     @JoinColumn(name = "author_id") // 외래 키 설정
     private Member author; // 게시판 작성자
 
-    @OneToMany
+    @OneToMany(mappedBy = "board")
     private Set<Comment> comments;
 }
