@@ -1,0 +1,44 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="utf-8">
+  <link href="../css/bootstrap.min.css"
+        th:href="@{/css/bootstrap.min.css}" rel="stylesheet">
+</head>
+<body>
+<div class="container" style="max-width: 600px">
+  <div class="py-5 text-center">
+    <h2>상품 목록</h2>
+  </div>
+  <div class="row">
+    <div class="col">
+      <button class="btn btn-primary float-end"
+              onclick="location.href='addForm.html'"
+              th:onclick="|location.href='@{/boards/board/add}'|" type="button">글 등록
+      </button>
+    </div>
+  </div>
+  <hr class="my-4">
+  <div>
+    <table class="table">
+      <thead>
+      <tr>
+        <th>id</th>
+        <th>제목</th>
+        <th>작성자</th>
+        <th>.</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr th:each="board : ${boards}">
+        <td><a href="board.html" th:href="@{/boards/board/{boardId}(boardId=${board.id})}" th:text="${board.id}">글 id</a></td>
+        <td><a href="board.html" th:href="@{/boards/board/{boardId}(boardId=${board.id})}" th:text="${board.title}">제목</a></td>
+        <td th:text="${board.author}">작성자</td>
+        <td th:text="${board.content}">내용</td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+</div> <!-- /container -->
+</body>
+</html>
