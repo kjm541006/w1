@@ -16,6 +16,7 @@ public class Member {
     private Long id;
 
     private String username;
+    private String password;
 
     @OneToMany(mappedBy = "author")
     private Set<Board> boards; // 해당 회원이 작성한 게시판 목록
