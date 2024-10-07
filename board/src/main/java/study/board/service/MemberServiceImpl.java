@@ -1,6 +1,7 @@
 package study.board.service;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import study.board.entity.Member;
 import study.board.repository.MemberRepository;
@@ -13,9 +14,12 @@ import java.util.Optional;
 public class MemberServiceImpl implements MemberService{
 
     private final MemberRepository memberRepository;
-    @Override
-    public Member createMember(Member member) {
-        return memberRepository.save(member);
+
+    private BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+
+    public void register(Member member) {
+        member.setPassword(passwordEncoder.encode(member.getPassword())); // 비밀번호 암호화
+        memberRepository.save(member);
     }
 
     @Override
