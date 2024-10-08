@@ -4,10 +4,7 @@ import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import study.board.entity.Member;
 import study.board.service.AuthService;
@@ -38,19 +35,24 @@ public class MemberController {
 
     // 로그인 페이지
     @GetMapping("/login")
-    public String getLogin(){
+    public void getLogin(String errorCode, String logout){
+        log.info("------get login------");
+        log.info("logout: " + logout);
 
-        return "/member/login";
+        if(logout != null){
+            log.info("user logout.......");
+        }
+
     }
 
     // 로그인
     @PostMapping("/login")
-    public String login(@RequestParam String username, @RequestParam String password, HttpSession session) {
-        if (authService.login(username, password, session)) {
-            return "redirect:/boards"; // 로그인 성공 시 홈으로 리다이렉트
-        } else {
-            return "redirect:/member/login?error"; // 로그인 실패 시 로그인 페이지로 리다이렉트
-        }
+    public void login(@RequestParam String username, @RequestParam String password, HttpSession session) {
+//        if (authService.login(username, password, session)) {
+//            return "redirect:/boards"; // 로그인 성공 시 홈으로 리다이렉트
+//        } else {
+//            return "redirect:/member/login?error"; // 로그인 실패 시 로그인 페이지로 리다이렉트
+//        }
     }
 
     // 로그아웃
@@ -76,7 +78,8 @@ public class MemberController {
 
     // 회원 정보 수정
     @PostMapping("/{memberId}/edit")
-    public String edit(RedirectAttributes redirectAttributes){
+    public String edit(@PathVariable Long memberId, Member member, RedirectAttributes redirectAttributes){
+        memberService.updateMember(memberId, member);
 
         return "redirect:/member/{memberId}";
     }
