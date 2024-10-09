@@ -57,6 +57,11 @@ public class BoardController {
     public String getBoardById(Model model, @PathVariable Long boardId){
         log.info("boardId = " + boardId);
         Board board = boardService.getBoardById(boardId).orElseThrow(()-> new RuntimeException("Not Found"));
+        log.info("Board: {}", board);
+        log.info("Author: {}", board.getAuthor()); // author 객체 확인
+        if (board.getAuthor() != null) {
+            log.info("Author Username: {}", board.getAuthor().getUsername());
+        }
         model.addAttribute("board", board);
 
         return "board/board";
