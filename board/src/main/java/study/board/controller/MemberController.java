@@ -49,6 +49,7 @@ public class MemberController {
     // 로그인
     @PostMapping("/login")
     public void login(@RequestParam String username, @RequestParam String password, HttpSession session) {
+        log.info("----------login------------");
 //        if (authService.login(username, password, session)) {
 //            return "redirect:/boards"; // 로그인 성공 시 홈으로 리다이렉트
 //        } else {

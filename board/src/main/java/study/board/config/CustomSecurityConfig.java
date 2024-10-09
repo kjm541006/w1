@@ -48,7 +48,8 @@ public class CustomSecurityConfig {
         );
         http.formLogin(config -> config
                 .loginPage("/member/login")
-                .permitAll());
+                .permitAll()
+                .defaultSuccessUrl("/boards", true));
         http.csrf((csrf) -> csrf.disable());
         http.rememberMe(rememberMe -> rememberMe
                 .key("12345678")
@@ -56,7 +57,6 @@ public class CustomSecurityConfig {
                 .userDetailsService(userDetailsService) // UserDetailsService 설정
                 .tokenValiditySeconds(60 * 60 * 24 * 30) // 유효 기간 설정
         );
-
 
         return http.build();
     }

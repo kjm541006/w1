@@ -31,8 +31,8 @@
       </thead>
       <tbody>
       <tr th:each="board : ${boards}">
-        <td><a href="board.html" th:href="@{/boards/board/{boardId}(boardId=${board.id})}" th:text="${board.id}">글 id</a></td>
-        <td><a href="board.html" th:href="@{/boards/board/{boardId}(boardId=${board.id})}" th:text="${board.title}">제목</a></td>
+        <td><a href="board.html" th:href="@{/boards/{boardId}(boardId=${board.id})}" th:text="${board.id}">글 id</a></td>
+        <td><a href="board.html" th:href="@{/boards/{boardId}(boardId=${board.id})}" th:text="${board.title}">제목</a></td>
         <td th:text="${board.author}">작성자</td>
         <td th:text="${board.content}">내용</td>
       </tr>
