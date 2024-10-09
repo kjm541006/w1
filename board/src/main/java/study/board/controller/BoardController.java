@@ -4,6 +4,8 @@ import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -11,8 +13,10 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import study.board.entity.Board;
 import study.board.entity.Member;
 import study.board.service.BoardServiceImpl;
+import study.board.service.MemberServiceImpl;
 
 import java.util.List;
+import java.util.Optional;
 
 @Controller
 @Slf4j
@@ -21,10 +25,22 @@ import java.util.List;
 public class BoardController {
 
     private final BoardServiceImpl boardService;
+    private final MemberServiceImpl memberService;
 
     // 리스트 조회
     @GetMapping
-    public String getBoardList(Model model){
+    public String getBoardList(Model model, HttpSession session){
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (authentication != null && authentication.isAuthenticated()) {
+            String username = authentication.getName(); // 사용자 이름
+            Optional<Member> loggedInMember = memberService.getMemberByUsername(username);
+            Long id = loggedInMember.get().getId();
+            // 추가적인 사용자 정보 접근 가능
+            log.info("로그인한 사용자: {}", username);
+            log.info("로그인한 사용자 id: {}", id);
+        } else {
+            log.warn("로그인한 사용자가 없습니다.");
+        }
         List<Board> boards = boardService.getAllBoards();
         model.addAttribute("boards", boards);
 
@@ -34,8 +50,13 @@ public class BoardController {
     // 글 추가 form
     @PreAuthorize("hasRole('USER')")
     @GetMapping("/board/add")
-    public String addForm(){
-
+    public String addForm(HttpSession session){
+        Member loggedInUser = (Member) session.getAttribute("loggedInUser");
+        if (loggedInUser != null) {
+            log.info("로그인한 사용자: {}", loggedInUser.getUsername());
+        } else {
+            log.warn("로그인한 사용자가 없습니다.");
+        }
         return "board/register";
     }
 
@@ -44,9 +65,12 @@ public class BoardController {
     public String addBoard(Board board, RedirectAttributes redirectAttributes, HttpSession session){
         Member loggedInUser = (Member) session.getAttribute("loggedInUser");
         if (loggedInUser != null) {
+            log.info("로그인한 사용자: {}", loggedInUser.getUsername());
             board.setAuthor(loggedInUser); // 현재 로그인한 사용자 설정
+        } else {
+            log.warn("로그인한 사용자가 없습니다.");
         }
-        Board savedBoard = boardService.createBoard(board);
+        Board savedBoard = boardService.createBoard(board, loggedInUser);
         redirectAttributes.addAttribute("boardId", savedBoard.getId());
         redirectAttributes.addAttribute("status", true);
 

@@ -6,6 +6,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import study.board.entity.Board;
+import study.board.entity.Member;
 import study.board.repository.BoardRepository;
 
 import java.util.List;
@@ -17,18 +18,14 @@ import java.util.Optional;
 public class BoardServiceImpl implements BoardService{
 
     private final BoardRepository boardRepository;
-
+    private final MemberServiceImpl memberService;
 
     @Override
-    public Board createBoard(Board board) {
-//        if (authentication != null && authentication.isAuthenticated()) {
-//            String username = authentication.getName(); // 사용자 이름
-//            log.info("boardService username = " + username);
-//            // 추가적인 사용자 정보 접근 가능
-//        } else {
-//            // 인증되지 않은 사용자 처리
-//            log.info("-------username not found=--------");
-//        }
+    public Board createBoard(Board board, Member member) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String username = authentication.getName();
+        Optional<Member> loggedInMember = memberService.getMemberByUsername(username);
+        board.setAuthor(loggedInMember.get());
 
         return boardRepository.save(board);
     }

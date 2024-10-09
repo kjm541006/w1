@@ -34,6 +34,11 @@ public class MemberServiceImpl implements MemberService{
     }
 
     @Override
+    public Optional<Member> getMemberByUsername(String username) {
+        return memberRepository.findByUsername(username);
+    }
+
+    @Override
     public Member updateMember(Long id, Member updateParams) {
         Member findMember = memberRepository.findById(id).orElseThrow(()-> new RuntimeException("Not Found"));
         findMember.setUsername(updateParams.getUsername());
