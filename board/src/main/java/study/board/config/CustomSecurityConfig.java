@@ -43,17 +43,19 @@ public class CustomSecurityConfig {
         log.info("--------configure----------");
 
         http.authorizeHttpRequests((authorize) -> authorize
-                        .anyRequest().authenticated());
-                http.formLogin(config -> config
-                        .loginPage("/member/login")
-                        .permitAll());
-                http.csrf((csrf) -> csrf.disable());
-                http.rememberMe(rememberMe -> rememberMe
-                        .key("12345678")
-                        .tokenRepository(persistentTokenRepository()) // 토큰 리포지토리 메서드
-                        .userDetailsService(userDetailsService) // UserDetailsService 설정
-                        .tokenValiditySeconds(60 * 60 * 24 * 30) // 유효 기간 설정
-                );
+                .requestMatchers("/member/register", "/member/login").permitAll() // 회원가입 및 로그인 페이지 접근 허용
+                .anyRequest().authenticated() // 나머지 요청은 인증 필요
+        );
+        http.formLogin(config -> config
+                .loginPage("/member/login")
+                .permitAll());
+        http.csrf((csrf) -> csrf.disable());
+        http.rememberMe(rememberMe -> rememberMe
+                .key("12345678")
+                .tokenRepository(persistentTokenRepository()) // 토큰 리포지토리 메서드
+                .userDetailsService(userDetailsService) // UserDetailsService 설정
+                .tokenValiditySeconds(60 * 60 * 24 * 30) // 유효 기간 설정
+        );
 
 
         return http.build();

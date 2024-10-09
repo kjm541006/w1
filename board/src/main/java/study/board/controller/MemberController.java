@@ -22,8 +22,9 @@ public class MemberController {
     // 회원 등록 페이지
     @GetMapping("/register")
     public String register(){
+        log.info("get register 호출");
 
-        return "/member/register";
+        return "member/register";
     }
     // 회원 추가
     @PostMapping("/register")

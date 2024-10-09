@@ -36,7 +36,7 @@ public class BoardController {
     @GetMapping("/board/add")
     public String addForm(){
 
-        return "board/add";
+        return "board/register";
     }
 
     // 글 등록
@@ -55,6 +55,7 @@ public class BoardController {
 
     @GetMapping("/{boardId}")
     public String getBoardById(Model model, @PathVariable Long boardId){
+        log.info("boardId = " + boardId);
         Board board = boardService.getBoardById(boardId).orElseThrow(()-> new RuntimeException("Not Found"));
         model.addAttribute("board", board);
 

@@ -41,5 +41,12 @@
     </div>
   </form>
 </div> <!-- /container -->
+<script th:inline="javascript">
+
+  const auth = [[${#authentication}]]
+
+  const errors = [[${errors}]]
+  console.log(errors)
+</script>
 </body>
 </html>

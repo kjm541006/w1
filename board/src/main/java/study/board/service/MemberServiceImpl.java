@@ -18,6 +18,7 @@ public class MemberServiceImpl implements MemberService{
     private BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
     public void register(Member member) {
+        member.setUsername(member.getUsername());
         member.setPassword(passwordEncoder.encode(member.getPassword())); // 비밀번호 암호화
         memberRepository.save(member);
     }
