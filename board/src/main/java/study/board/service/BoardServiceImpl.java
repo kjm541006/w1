@@ -5,12 +5,15 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
+import study.board.dto.BoardDTO;
+import study.board.dto.CommentDTO;
 import study.board.entity.Board;
 import study.board.entity.Member;
 import study.board.repository.BoardRepository;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 @Slf4j
@@ -31,9 +34,18 @@ public class BoardServiceImpl implements BoardService{
     }
 
     @Override
-    public List<Board> getAllBoards() {
+    public List<BoardDTO> getAllBoards() {
+        List<Board> boards = boardRepository.findAll();
+        return boards.stream()
+                .map(board -> {
+                    String authorName = board.getAuthor() != null ? board.getAuthor().getUsername() : "Anonymous"; // 작성자 이름 가져오기
+                    List<CommentDTO> commentDTOs = board.getComments().stream()
+                            .map(comment -> new CommentDTO(comment.getId(), comment.getContent(), comment.getAuthor().getUsername()))
+                            .collect(Collectors.toList());
 
-        return boardRepository.findAll();
+                    return new BoardDTO(board.getId(), board.getTitle(), board.getContent(), authorName, commentDTOs);
+                })
+                .collect(Collectors.toList());
     }
 
     @Override

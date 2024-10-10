@@ -10,6 +10,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import study.board.dto.BoardDTO;
 import study.board.entity.Board;
 import study.board.entity.Member;
 import study.board.service.BoardServiceImpl;
@@ -53,8 +54,9 @@ public class BoardController {
             model.addAttribute("logIn", false);
             log.warn("로그인한 사용자가 없습니다.");
         }
-        List<Board> boards = boardService.getAllBoards();
-        model.addAttribute("boards", boards);
+
+        List<BoardDTO> boardDTOs = boardService.getAllBoards();
+        model.addAttribute("boards", boardDTOs);
 
         return "board/boardList";
     }
