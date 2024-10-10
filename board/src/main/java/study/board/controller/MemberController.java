@@ -3,12 +3,16 @@ package study.board.controller;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import study.board.entity.Member;
 import study.board.service.AuthService;
 import study.board.service.MemberServiceImpl;
+
+import java.util.Optional;
 
 @Controller
 @Slf4j
@@ -53,12 +57,6 @@ public class MemberController {
 
             return "member/login";
         }
-    }
-
-    // 로그인
-    @PostMapping("/login")
-    public void login(@RequestParam String username, @RequestParam String password, HttpSession session) {
-        log.info("----------login------------");
     }
 
     // 로그아웃

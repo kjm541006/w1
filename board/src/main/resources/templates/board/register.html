@@ -16,7 +16,7 @@
     <h2>게시글 등록</h2>
   </div>
   <h4 class="mb-3">제목 입력</h4>
-  <form action="board.html" th:action method="post">
+  <form action="/board/add" th:action th:object="${boardDTO}" method="post">
     <div>
       <label for="title">제목</label>
       <input type="text" id="title" name="title" class="form-control" placeholder="이름을 입력하세요">
@@ -41,12 +41,12 @@
     </div>
   </form>
 </div> <!-- /container -->
-<script th:inline="javascript">
+<!--<script th:inline="javascript">-->
 
-  const auth = [[${#authentication}]]
+<!--  const auth = [[${#authentication}]]-->
 
-  const errors = [[${errors}]]
-  console.log(errors)
-</script>
+<!--  const errors = [[${errors}]]-->
+<!--  console.log(errors)-->
+<!--</script>-->
 </body>
 </html>

@@ -24,10 +24,14 @@ public class BoardServiceImpl implements BoardService{
     private final MemberServiceImpl memberService;
 
     @Override
-    public Board createBoard(Board board, Member member) {
+    public Board createBoard(BoardDTO boardDTO, Member member) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String username = authentication.getName();
         Optional<Member> loggedInMember = memberService.getMemberByUsername(username);
+
+        Board board = new Board();
+        board.setTitle(boardDTO.getTitle());
+        board.setContent(boardDTO.getContent());
         board.setAuthor(loggedInMember.get());
 
         return boardRepository.save(board);

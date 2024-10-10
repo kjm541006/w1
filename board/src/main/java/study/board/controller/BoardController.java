@@ -30,30 +30,41 @@ public class BoardController {
 
     // 리스트 조회
     @GetMapping
-    public String getBoardList(Model model, HttpSession session){
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+    public String getBoardList(Model model, HttpSession session, Authentication authentication){
+        Member loggedInUser = (Member) session.getAttribute("loggedInUser");
 
-        if (authentication != null && authentication.isAuthenticated()) {
-            String username = authentication.getName(); // 사용자 이름
+        if (loggedInUser == null && authentication != null && authentication.isAuthenticated()) {
+            String username = authentication.getName();
+
+            log.info("Authentication 에서 가져온 username: " + username);
 
             Optional<Member> loggedInMember = memberService.getMemberByUsername(username);
-
             if(loggedInMember.isPresent()){
                 Long id = loggedInMember.get().getId();
                 model.addAttribute("logIn", true);
                 session.setAttribute("loggedInUser", loggedInMember.get());
+                loggedInUser = (Member) session.getAttribute("loggedInUser");
 
-                // 추가적인 사용자 정보 접근 가능
                 log.info("로그인한 사용자: {}", username);
                 log.info("로그인한 사용자 id: {}", id);
             }else {
-                model.addAttribute("logIn", false);
                 log.warn("로그인한 사용자를 찾을 수 없습니다.");
             }
-        } else {
-            model.addAttribute("logIn", false);
-            log.warn("로그인한 사용자가 없습니다.");
         }
+
+        log.info("loggedInUser= " + loggedInUser);
+
+        if(loggedInUser != null){
+                Long id = loggedInUser.getId();
+                model.addAttribute("logIn", true);
+                session.setAttribute("loggedInUser", loggedInUser);
+
+                log.info("로그인한 사용자 id: {}", id);
+            }else {
+                model.addAttribute("logIn", false);
+
+                log.warn("로그인한 사용자를 찾을 수 없습니다.");
+            }
 
         List<BoardDTO> boardDTOs = boardService.getAllBoards();
         model.addAttribute("boards", boardDTOs);
@@ -65,28 +76,24 @@ public class BoardController {
     @PreAuthorize("hasRole('USER')")
     @GetMapping("/board/add")
     public String addForm(HttpSession session){
-        Member loggedInUser = (Member) session.getAttribute("loggedInUser");
-        if (loggedInUser != null) {
-            log.info("로그인한 사용자: {}", loggedInUser.getUsername());
-        } else {
-            log.warn("로그인한 사용자가 없습니다.");
-        }
+
         return "board/register";
     }
 
     // 글 등록
     @PostMapping("/board/add")
-    public String addBoard(Board board, RedirectAttributes redirectAttributes, HttpSession session){
+    public String addBoard(BoardDTO boardDTO, RedirectAttributes redirectAttributes, HttpSession session){
+        log.info("---------글 등록----------");
         Member loggedInUser = (Member) session.getAttribute("loggedInUser");
         if (loggedInUser != null) {
             log.info("로그인한 사용자: {}", loggedInUser.getUsername());
-            board.setAuthor(loggedInUser); // 현재 로그인한 사용자 설정
+
+            Board savedBoard = boardService.createBoard(boardDTO, loggedInUser);
+            redirectAttributes.addAttribute("boardId", savedBoard.getId());
+            redirectAttributes.addAttribute("status", true);
         } else {
             log.warn("로그인한 사용자가 없습니다.");
         }
-        Board savedBoard = boardService.createBoard(board, loggedInUser);
-        redirectAttributes.addAttribute("boardId", savedBoard.getId());
-        redirectAttributes.addAttribute("status", true);
 
         return "redirect:/boards/{boardId}";
     }

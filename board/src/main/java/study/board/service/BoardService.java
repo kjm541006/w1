@@ -9,7 +9,7 @@ import java.util.Optional;
 
 public interface BoardService {
 
-    public Board createBoard(Board board, Member member);
+    public Board createBoard(BoardDTO boardDTO, Member member);
     public List<BoardDTO> getAllBoards();
     public Optional<Board> getBoardById(Long id);
     public Board updateBoard(Long id, Board updateParams);

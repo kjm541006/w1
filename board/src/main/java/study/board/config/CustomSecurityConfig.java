@@ -5,21 +5,14 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.config.Customizer;
-import org.springframework.security.config.annotation.authentication.configuration.EnableGlobalAuthentication;
-import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
-import org.springframework.security.web.authentication.RememberMeServices;
 import org.springframework.security.web.authentication.rememberme.JdbcTokenRepositoryImpl;
 import org.springframework.security.web.authentication.rememberme.PersistentTokenRepository;
-import org.springframework.security.web.authentication.rememberme.TokenBasedRememberMeServices;
 import study.board.security.CustomUserDetailsService;
 
 import javax.sql.DataSource;
@@ -32,6 +25,7 @@ public class CustomSecurityConfig {
 
     private final DataSource dataSource;
     private final CustomUserDetailsService userDetailsService;
+    private final CustomSuccessHandler customSuccessHandler;
 
     @Bean
     public PasswordEncoder passwordEncoder(){
@@ -49,6 +43,7 @@ public class CustomSecurityConfig {
         http.formLogin(config -> config
                 .loginPage("/member/login")
                 .permitAll()
+//                .successHandler(customSuccessHandler)
                 .defaultSuccessUrl("/boards", true));
         http.csrf((csrf) -> csrf.disable());
         http.rememberMe(rememberMe -> rememberMe
