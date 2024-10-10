@@ -36,33 +36,37 @@ public class MemberController {
 
     // 로그인 페이지
     @GetMapping("/login")
-    public void getLogin(String errorCode, String logout){
-        log.info("------get login------");
-        log.info("logout: " + logout);
+    public String getLogin(String errorCode, String logout, HttpSession session){
+        Member loggedInUser = (Member) session.getAttribute("loggedInUser");
+        log.info("loggedInUser: " + loggedInUser);
 
-        if(logout != null){
-            log.info("user logout.......");
+        if(loggedInUser != null){
+
+            return "redirect:/boards";
+        }else{
+            log.info("------get login------");
+            log.info("logout: " + logout);
+
+            if(logout != null){
+                log.info("user logout.......");
+            }
+
+            return "member/login";
         }
-
     }
 
     // 로그인
     @PostMapping("/login")
     public void login(@RequestParam String username, @RequestParam String password, HttpSession session) {
         log.info("----------login------------");
-//        if (authService.login(username, password, session)) {
-//            return "redirect:/boards"; // 로그인 성공 시 홈으로 리다이렉트
-//        } else {
-//            return "redirect:/member/login?error"; // 로그인 실패 시 로그인 페이지로 리다이렉트
-//        }
     }
 
     // 로그아웃
-    @PostMapping("/logout")
-    public String logout(HttpSession session){
-        authService.logout(session);
-        return "redirect:/member/login";
-    }
+//    @PostMapping("/logout")
+//    public String logout(HttpSession session){
+////        authService.logout(session);
+//        return "redirect:/member/login";
+//    }
 
     // 회원 상세 페이지
     @GetMapping("/{memberId}")

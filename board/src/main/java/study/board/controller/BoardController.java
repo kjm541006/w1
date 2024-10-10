@@ -31,14 +31,26 @@ public class BoardController {
     @GetMapping
     public String getBoardList(Model model, HttpSession session){
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
         if (authentication != null && authentication.isAuthenticated()) {
             String username = authentication.getName(); // 사용자 이름
+
             Optional<Member> loggedInMember = memberService.getMemberByUsername(username);
-            Long id = loggedInMember.get().getId();
-            // 추가적인 사용자 정보 접근 가능
-            log.info("로그인한 사용자: {}", username);
-            log.info("로그인한 사용자 id: {}", id);
+
+            if(loggedInMember.isPresent()){
+                Long id = loggedInMember.get().getId();
+                model.addAttribute("logIn", true);
+                session.setAttribute("loggedInUser", loggedInMember.get());
+
+                // 추가적인 사용자 정보 접근 가능
+                log.info("로그인한 사용자: {}", username);
+                log.info("로그인한 사용자 id: {}", id);
+            }else {
+                model.addAttribute("logIn", false);
+                log.warn("로그인한 사용자를 찾을 수 없습니다.");
+            }
         } else {
+            model.addAttribute("logIn", false);
             log.warn("로그인한 사용자가 없습니다.");
         }
         List<Board> boards = boardService.getAllBoards();

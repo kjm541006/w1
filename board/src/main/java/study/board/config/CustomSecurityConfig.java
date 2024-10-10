@@ -43,7 +43,7 @@ public class CustomSecurityConfig {
         log.info("--------configure----------");
 
         http.authorizeHttpRequests((authorize) -> authorize
-                .requestMatchers("/member/register", "/member/login").permitAll() // 회원가입 및 로그인 페이지 접근 허용
+                .requestMatchers("/member/register", "/member/login", "/boards").permitAll() // 회원가입 및 로그인 페이지 접근 허용
                 .anyRequest().authenticated() // 나머지 요청은 인증 필요
         );
         http.formLogin(config -> config
@@ -56,6 +56,12 @@ public class CustomSecurityConfig {
                 .tokenRepository(persistentTokenRepository()) // 토큰 리포지토리 메서드
                 .userDetailsService(userDetailsService) // UserDetailsService 설정
                 .tokenValiditySeconds(60 * 60 * 24 * 30) // 유효 기간 설정
+        );
+        http.logout(logout -> logout
+                .logoutUrl("/member/logout") // 로그아웃 URL
+                .logoutSuccessUrl("/member/login?logout") // 로그아웃 성공 후 리다이렉트 URL
+                .invalidateHttpSession(true) // 세션 무효화
+                .deleteCookies("JSESSIONID") // 쿠키 삭제 (필요할 경우)
         );
 
         return http.build();

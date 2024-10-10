@@ -7,6 +7,14 @@
 </head>
 <body>
 <div class="container" style="max-width: 600px">
+  <div>
+    <div th:if="${logIn == false}">
+      <a href="/member/login">로그인</a>
+    </div>
+    <div th:if="${logIn == true}">
+      <a href="/member/logout">로그아웃</a>
+    </div>
+  </div>
   <div class="py-5 text-center">
     <h2>상품 목록</h2>
   </div>
