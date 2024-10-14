@@ -111,4 +111,12 @@ public class BoardController {
 
         return "board/board";
     }
+
+    @GetMapping("/{boardId}/edit")
+    public String getEditBoard(Model model, @PathVariable Long boardId){
+        Board board = boardService.getBoardById(boardId).orElseThrow(() -> new RuntimeException("Not Found"));
+        model.addAttribute("board", board);
+
+        return "board/edit";
+    }
 }
