@@ -12,6 +12,7 @@ public interface BoardService {
     public Board createBoard(BoardDTO boardDTO, Member member);
     public List<BoardDTO> getAllBoards();
     public Optional<Board> getBoardById(Long id);
-    public Board updateBoard(Long id, Board updateParams);
+    public void updateBoard(Long boardId, BoardDTO updateParams);
     public void deleteBoard(Long id);
+
 }

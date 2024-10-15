@@ -5,6 +5,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import study.board.dto.BoardDTO;
 import study.board.dto.CommentDTO;
 import study.board.entity.Board;
@@ -69,14 +70,15 @@ public class BoardServiceImpl implements BoardService{
         return boardRepository.findById(id);
     }
 
-    @Override
-    public Board updateBoard(Long id, Board updateParams) {
-        Board findBoard = boardRepository.findById(id).orElseThrow(()-> new RuntimeException("Board Not Found"));
-        findBoard.setTitle(updateParams.getTitle());
-        findBoard.setContent(updateParams.getContent());
-
-        return boardRepository.save(findBoard);
+    @Transactional
+    public void updateBoard(Long boardId, BoardDTO updateParams) {
+        Board board = boardRepository.findById(boardId).orElseThrow(() -> new RuntimeException("Board not found"));
+        board.setTitle(updateParams.getTitle());
+        board.setContent(updateParams.getContent());
+        // 추가 필드 설정
+        boardRepository.save(board); // 필요에 따라
     }
+
 
     @Override
     public void deleteBoard(Long id) {

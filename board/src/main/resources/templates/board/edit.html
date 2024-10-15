@@ -12,24 +12,24 @@
 <body>
 <div class="container">
   <div class="py-5 text-center">
-    <h2>상품 수정 폼</h2>
+    <h2>게시글 수정 폼</h2>
   </div>
-  <form action="#" th:action method="post">
+  <form th:action="@{/boards/{boardId}/edit(boardId=${board.id})}" method="post" th:object="${board}">
     <div>
       <label for="id">게시글 번호</label>
-      <input type="text" id="id" name="id" class="form-control" th:value="${board.id}" readonly>
+      <input type="text" id="id" name="id" class="form-control" th:value="*{id}" readonly>
     </div>
     <div>
-      <label for="itemName">제목</label>
-      <input type="text" id="itemName" name="itemName" class="form-control" th:value="${board.title}">
+      <label for="title">제목</label>
+      <input type="text" id="title" name="title" class="form-control" th:value="*{title}">
     </div>
     <div>
-      <label for="price">내용</label>
-      <input type="text" id="price" name="price" class="form-control" th:value="${board.content}">
+      <label for="content">내용</label>
+      <textarea id="content" name="content" class="form-control" th:utext="*{content}"></textarea>
     </div>
     <div>
-      <label for="quantity">작성자</label>
-      <input type="text" id="quantity" name="quantity" class="form-control" th:value="${board.author.username}" readonly>
+      <label for="author">작성자</label>
+      <input type="text" id="author" name="author" class="form-control" th:value="${board.authorName}" readonly>
     </div>
     <hr class="my-4">
     <div class="row">
@@ -37,7 +37,7 @@
         <button class="w-100 btn btn-primary btn-lg" type="submit">저장</button>
       </div>
       <div class="col">
-        <button class="w-100 btn btn-secondary btn-lg" th:onclick="'location.href=\'/items\''" type="button">취소</button>
+        <button class="w-100 btn btn-secondary btn-lg" th:onclick="'location.href=\'/boards\''" type="button">취소</button>
       </div>
     </div>
   </form>

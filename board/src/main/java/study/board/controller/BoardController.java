@@ -7,6 +7,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -113,10 +114,25 @@ public class BoardController {
     }
 
     @GetMapping("/{boardId}/edit")
-    public String getEditBoard(Model model, @PathVariable Long boardId){
+    public String getEditBoard(Model model, @PathVariable Long boardId) {
         Board board = boardService.getBoardById(boardId).orElseThrow(() -> new RuntimeException("Not Found"));
-        model.addAttribute("board", board);
 
+        // Board 엔티티를 BoardDTO로 변환
+        BoardDTO boardDTO = new BoardDTO();
+        boardDTO.setId(board.getId());
+        boardDTO.setTitle(board.getTitle());
+        boardDTO.setContent(board.getContent());
+        boardDTO.setAuthorName(board.getAuthor().getUsername()); // 작성자 이름 설정
+        // 댓글 리스트도 필요하다면 추가
+
+        model.addAttribute("board", boardDTO);
         return "board/edit";
     }
+
+    @PostMapping("/{boardId}/edit")
+    public String editBoard(@ModelAttribute BoardDTO updateParams, @PathVariable Long boardId) {
+        boardService.updateBoard(boardId, updateParams);
+        return "redirect:/boards";
+    }
+
 }
