@@ -135,4 +135,12 @@ public class BoardController {
         return "redirect:/boards";
     }
 
+    // 댓글 있을 경우 삭제 안되는 버그 수정해야 함(참조 있을 경우 삭제 x)
+    @PostMapping("/{boardId}/delete")
+    public String deleteBoard(@PathVariable Long boardId){
+        boardService.deleteBoard(boardId);
+
+        return "redirect:/boards";
+    }
+
 }
