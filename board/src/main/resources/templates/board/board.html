@@ -38,6 +38,8 @@
     <input type="text" id="author" name="author" class="form-control"
            value="10" th:value="${board.author.username}" readonly>
   </div>
+  <div>댓글 수: <span th:text="${#lists.size(board.comments)}">0</span></div>
+
   <hr class="my-4">
   <div class="row">
     <div class="col">
