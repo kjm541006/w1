@@ -3,6 +3,7 @@ package study.board.controller;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -100,22 +101,32 @@ public class BoardController {
     }
 
     @GetMapping("/{boardId}")
-    public String getBoardById(Model model, @PathVariable Long boardId){
+    public String getBoardById(Model model, @PathVariable Long boardId, HttpSession session){
         log.info("boardId = " + boardId);
         Board board = boardService.getBoardById(boardId).orElseThrow(()-> new RuntimeException("Not Found"));
+        Long loggedInUserId = ((Member) session.getAttribute("loggedInUser")).getId();
+
         log.info("Board: {}", board);
         log.info("Author: {}", board.getAuthor()); // author 객체 확인
         if (board.getAuthor() != null) {
             log.info("Author Username: {}", board.getAuthor().getUsername());
         }
+
         model.addAttribute("board", board);
+        model.addAttribute("loggedInUserId", loggedInUserId);
 
         return "board/board";
     }
 
     @GetMapping("/{boardId}/edit")
-    public String getEditBoard(Model model, @PathVariable Long boardId) {
+    public String getEditBoard(Model model, @PathVariable Long boardId, HttpSession session) {
         Board board = boardService.getBoardById(boardId).orElseThrow(() -> new RuntimeException("Not Found"));
+        Long loggedInUserId = ((Member) session.getAttribute("loggedInUser")).getId();
+
+        // 작성자 아닐 경우 접근 제어
+        if(!board.getAuthor().getId().equals(loggedInUserId)){
+            throw new AccessDeniedException("You do not have permission to edit this post.");
+        }
 
         // Board 엔티티를 BoardDTO로 변환
         BoardDTO boardDTO = new BoardDTO();
@@ -123,9 +134,13 @@ public class BoardController {
         boardDTO.setTitle(board.getTitle());
         boardDTO.setContent(board.getContent());
         boardDTO.setAuthorName(board.getAuthor().getUsername()); // 작성자 이름 설정
+
+        log.info("작성자: " + board.getAuthor().getId());
+
         // 댓글 리스트도 필요하다면 추가
 
         model.addAttribute("board", boardDTO);
+        model.addAttribute("loggedInUserId", loggedInUserId);
         return "board/edit";
     }
 

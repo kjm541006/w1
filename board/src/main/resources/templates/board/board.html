@@ -43,10 +43,10 @@
   <hr class="my-4">
   <div class="row">
     <div class="col">
-      <button class="w-100 btn btn-primary btn-lg"
-              onclick="location.href='editForm.html'"
+      <button th:if="${loggedInUserId} == ${board.author.id}" class="w-100 btn btn-primary btn-lg"
               th:onclick="|location.href='@{/boards/{boardId}/edit(boardId=${board.id})}'|" type="button">상품 수정</button>
     </div>
+
     <div class="col">
       <form th:action="@{/boards/{boardId}/delete(boardId=${board.id})}" method="post" style="display:inline;">
         <input type="hidden" name="_method" value="delete" /> <!-- HTTP 메서드 오버라이드 -->
