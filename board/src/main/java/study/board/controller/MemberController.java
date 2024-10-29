@@ -59,13 +59,6 @@ public class MemberController {
         }
     }
 
-    // 로그아웃
-//    @PostMapping("/logout")
-//    public String logout(HttpSession session){
-////        authService.logout(session);
-//        return "redirect:/member/login";
-//    }
-
     // 회원 상세 페이지
     @GetMapping("/{memberId}")
     public String getDetail(){

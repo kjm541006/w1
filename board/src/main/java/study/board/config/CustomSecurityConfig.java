@@ -43,7 +43,7 @@ public class CustomSecurityConfig {
         http.formLogin(config -> config
                 .loginPage("/member/login")
                 .permitAll()
-//                .successHandler(customSuccessHandler)
+                .successHandler(customSuccessHandler)
                 .defaultSuccessUrl("/boards", true));
         http.csrf((csrf) -> csrf.disable());
         http.rememberMe(rememberMe -> rememberMe
