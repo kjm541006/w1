@@ -60,6 +60,26 @@
               th:onclick="|location.href='@{/boards}'|" type="button">목록으로</button>
     </div>
   </div>
+  <!-- 댓글 추가 폼 -->
+  <h3>댓글 추가</h3>
+  <form th:action="@{/boards/{boardId}/addComment(boardId=${board.id})}" method="post">
+    <div class="form-group">
+      <textarea name="content" class="form-control" placeholder="댓글 내용을 입력하세요." required></textarea>
+    </div>
+    <button type="submit" class="btn btn-primary">댓글 등록</button>
+  </form>
+
+  <hr class="my-4">
+
+  <!-- 댓글 목록 -->
+  <h3>댓글 목록</h3>
+  <div th:each="comment : ${board.comments}">
+    <div class="border p-2 mb-2">
+      <p th:text="${comment.content}"></p>
+      <small th:text="'작성자: ' + ${comment.author.username}"></small>
+    </div>
+  </div>
+
 </div> <!-- /container -->
 </body>
 </html>
