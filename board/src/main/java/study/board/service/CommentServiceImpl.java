@@ -52,7 +52,7 @@ public class CommentServiceImpl implements CommentService{
     }
 
     @Override
-    public Comment updateComment(Long id, Comment updateParams) {
+    public Comment updateComment(Long id, CommentDTO updateParams) {
         Comment findComment = commentRepository.findById(id).orElseThrow(()-> new RuntimeException("Not Found"));
         findComment.setContent(updateParams.getContent());
 

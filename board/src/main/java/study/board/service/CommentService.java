@@ -11,6 +11,6 @@ public interface CommentService {
     public Comment createComment(CommentDTO commentDTO, Long id);
     public List<Comment> getAllComments();
     public Optional<Comment> getCommentById(Long id);
-    public Comment updateComment(Long id, Comment updateParams);
+    public Comment updateComment(Long id, CommentDTO updateParams);
     public void deleteComment(Long id);
 }

@@ -77,6 +77,9 @@
     <div class="border p-2 mb-2">
       <p th:text="${comment.content}"></p>
       <small th:text="'작성자: ' + ${comment.author.username}"></small>
+
+      <a th:if="${loggedInUserId} == ${comment.author.id}" th:href="@{/boards/{boardId}/comments/{commentId}/edit(boardId=${board.id}, commentId=${comment.id})}" class="btn btn-secondary btn-sm">수정</a>
+
       <!-- 댓글 삭제 버튼 -->
       <form th:if="${loggedInUserId} == ${comment.author.id}"
             th:action="@{/boards/{boardId}/comments/{commentId}/delete(boardId=${board.id}, commentId=${comment.id})}" method="post" style="display:inline;">
