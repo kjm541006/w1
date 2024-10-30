@@ -10,5 +10,9 @@ import lombok.NoArgsConstructor;
 public class CommentDTO {
     private Long id;
     private String content;
-    // private String author; // 댓글 작성자 이름 추가
+    private String authorId;
+    private Long boardId;
+
+    public CommentDTO(Long id, String content) {
+    }
 }

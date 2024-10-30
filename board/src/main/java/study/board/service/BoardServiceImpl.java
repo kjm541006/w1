@@ -45,7 +45,7 @@ public class BoardServiceImpl implements BoardService{
                 .map(board -> {
                     String authorName = board.getAuthor() != null ? board.getAuthor().getUsername() : "Anonymous"; // 작성자 이름 가져오기
                     List<CommentDTO> commentDTOs = board.getComments().stream()
-                            .map(comment -> new CommentDTO(comment.getId(), comment.getContent(), comment.getAuthor().getUsername()))
+                            .map(comment -> new CommentDTO(comment.getId(), comment.getContent()))
                             .collect(Collectors.toList());
 
                     return new BoardDTO(board.getId(), board.getTitle(), board.getContent(), authorName, commentDTOs);
