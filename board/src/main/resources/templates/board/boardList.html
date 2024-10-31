@@ -2,23 +2,22 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
   <meta charset="utf-8">
-  <link href="../css/bootstrap.min.css"
-        th:href="@{/css/bootstrap.min.css}" rel="stylesheet">
+  <link rel="stylesheet" th:href="@{/css/boardListStyles.css}" />
 </head>
 <body>
 <div class="container" style="max-width: 600px">
   <div>
     <div th:if="${logIn == false}">
-      <a href="/member/login">로그인</a>
+      <a class="login-check" href="/member/login">로그인</a>
     </div>
     <div th:if="${logIn == true}">
-      <a href="/member/logout">로그아웃</a>
+      <a class="login-check" href="/member/logout">로그아웃</a>
     </div>
   </div>
   <div class="py-5 text-center">
     <h2>상품 목록</h2>
   </div>
-  <div class="row">
+  <div class="row add">
     <div class="col">
       <button class="btn btn-primary float-end"
               onclick="location.href='addForm.html'"
