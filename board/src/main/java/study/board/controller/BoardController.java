@@ -39,6 +39,7 @@ public class BoardController {
             String username = authentication.getName();
 
             log.info("Authentication 에서 가져온 username: " + username);
+            model.addAttribute("username", username);
 
             Optional<Member> loggedInMember = memberService.getMemberByUsername(username);
             if(loggedInMember.isPresent()){

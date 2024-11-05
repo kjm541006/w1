@@ -6,12 +6,15 @@
 </head>
 <body>
 <div class="container" style="max-width: 600px">
-  <div>
+  <div class="login">
     <div th:if="${logIn == false}">
       <a class="login-check" href="/member/login">로그인</a>
     </div>
     <div th:if="${logIn == true}">
       <a class="login-check" href="/member/logout">로그아웃</a>
+      <div class="greetings">
+        <span th:text="'안녕하세요 ' + ${username} + '님'"></span>
+      </div>
     </div>
   </div>
   <div class="py-5 text-center">
