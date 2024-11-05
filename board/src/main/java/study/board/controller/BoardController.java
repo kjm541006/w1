@@ -39,7 +39,7 @@ public class BoardController {
             String username = authentication.getName();
 
             log.info("Authentication 에서 가져온 username: " + username);
-            model.addAttribute("username", username);
+//            model.addAttribute("username", username);
 
             Optional<Member> loggedInMember = memberService.getMemberByUsername(username);
             if(loggedInMember.isPresent()){
@@ -71,6 +71,7 @@ public class BoardController {
 
         List<BoardDTO> boardDTOs = boardService.getAllBoards();
         model.addAttribute("boards", boardDTOs);
+        model.addAttribute("username", authentication.getName());
 
         return "board/boardList";
     }
