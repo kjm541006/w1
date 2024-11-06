@@ -25,6 +25,7 @@ import java.util.Optional;
 @Slf4j
 @RequestMapping("/boards")
 @RequiredArgsConstructor
+@CrossOrigin(origins = "*")
 public class BoardController {
 
     private final BoardServiceImpl boardService;

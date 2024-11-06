@@ -5,6 +5,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
@@ -36,8 +37,15 @@ public class CustomSecurityConfig {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception{
         log.info("--------configure----------");
 
+//        http.cors(Customizer.withDefaults()) // CORS 설정을 활성화
+//                .authorizeHttpRequests(authorize -> authorize
+//                        .requestMatchers("/member/register", "/member/login", "/boards/**").permitAll() // 특정 경로 허용
+//                        .anyRequest().authenticated() // 나머지 요청은 인증 필요
+//                );
+
         http.authorizeHttpRequests((authorize) -> authorize
                 .requestMatchers("/member/register", "/member/login", "/boards").permitAll() // 회원가입 및 로그인 페이지 접근 허용
+                .requestMatchers("/boards/{boardId:[0-9]+}").permitAll() // 숫자로 된 boardId만 허용
                 .anyRequest().authenticated() // 나머지 요청은 인증 필요
         );
         http.formLogin(config -> config
