@@ -1,46 +1,143 @@
+<!--<!DOCTYPE HTML>-->
+<!--<html xmlns:th="http://thymeleaf.org">-->
+<!--<head>-->
+<!--  <meta charset="utf-8">-->
+<!--  <link rel="stylesheet" th:href="@{/css/boardStyles.css}" />-->
+<!--  <style>-->
+<!--    .container {-->
+<!--    max-width: 560px;-->
+<!--    }-->
+<!--  </style>-->
+<!--</head>-->
+<!--<body>-->
+<!--<div class="container">-->
+<!--  <div class="py-5 text-center">-->
+<!--    <h2>상품 상세</h2>-->
+<!--  </div>-->
+
+<!--  &lt;!&ndash; &ndash;&gt;-->
+<!--  <h2 th:if="${param.status}" th:text="'저장 완료'"></h2>-->
+<!--  <div>-->
+<!--    <label for="boardId">게시글 번호</label>-->
+<!--    <input type="text" id="boardId" name="boardId" class="form-control"-->
+<!--            th:value="${board.id}" readonly>-->
+<!--  </div>-->
+<!--  <div>-->
+<!--    <label for="title">제목</label>-->
+<!--    <input type="text" id="title" name="title" class="form-control"-->
+<!--           value="제목" th:value="${board.title}" readonly>-->
+<!--  </div>-->
+<!--  <div>-->
+<!--    <label for="content">내용</label>-->
+<!--    <textarea type="text" id="content" name="content" class="form-control" th:text="${board.content}" readonly>-->
+<!--    </textarea>-->
+<!--  </div>-->
+<!--  <div>-->
+<!--    <label for="author">작성자</label>-->
+<!--    <input type="text" id="author" name="author" class="form-control"-->
+<!--           value="10" th:value="${board.author.username}" readonly>-->
+<!--  </div>-->
+<!--  <div>댓글 수: <span th:text="${#lists.size(board.comments)}">0</span></div>-->
+
+<!--  <hr class="my-4">-->
+<!--  <div class="row">-->
+<!--    <div class="col" th:if="${loggedInUserId} == ${board.author.id}">-->
+<!--      <button class="w-100 btn btn-primary btn-lg"-->
+<!--              th:onclick="|location.href='@{/boards/{boardId}/edit(boardId=${board.id})}'|" type="button">상품 수정</button>-->
+<!--    </div>-->
+
+<!--    <div class="col" th:if="${loggedInUserId} == ${board.author.id}">-->
+<!--      <form th:action="@{/boards/{boardId}/delete(boardId=${board.id})}" method="post" style="display:inline;">-->
+<!--        <input type="hidden" name="_method" value="delete" /> &lt;!&ndash; HTTP 메서드 오버라이드 &ndash;&gt;-->
+<!--        <button class="w-100 btn btn-danger btn-lg" type="submit">삭제</button>-->
+<!--      </form>-->
+
+<!--    </div>-->
+<!--    <div class="col">-->
+<!--      <button class="w-100 btn btn-secondary btn-lg"-->
+<!--              onclick="location.href='items.html'"-->
+<!--              th:onclick="|location.href='@{/boards}'|" type="button">목록으로</button>-->
+<!--    </div>-->
+<!--  </div>-->
+<!--  &lt;!&ndash; 댓글 추가 폼 &ndash;&gt;-->
+<!--  <h3>댓글 추가</h3>-->
+<!--  <form th:action="@{/boards/{boardId}/addComment(boardId=${board.id})}" method="post">-->
+<!--    <div class="form-group">-->
+<!--      <textarea name="content" class="form-control" placeholder="댓글 내용을 입력하세요." required></textarea>-->
+<!--    </div>-->
+<!--    <button type="submit" class="btn btn-primary">댓글 등록</button>-->
+<!--  </form>-->
+
+<!--  <hr class="my-4">-->
+
+<!--  &lt;!&ndash; 댓글 목록 &ndash;&gt;-->
+<!--  <h3>댓글 목록</h3>-->
+<!--  <div th:each="comment : ${board.comments}">-->
+<!--    <div class="border p-2 mb-2">-->
+<!--      <small class="comment-author" th:text="${comment.author.username}"></small>-->
+<!--      <p th:text="${comment.content}"></p>-->
+
+<!--      <a th:if="${loggedInUserId} == ${comment.author.id}" th:href="@{/boards/{boardId}/comments/{commentId}/edit(boardId=${board.id}, commentId=${comment.id})}" class="btn btn-secondary btn-sm">수정</a>-->
+
+<!--      &lt;!&ndash; 댓글 삭제 버튼 &ndash;&gt;-->
+<!--      <form th:if="${loggedInUserId} == ${comment.author.id}"-->
+<!--            th:action="@{/boards/{boardId}/comments/{commentId}/delete(boardId=${board.id}, commentId=${comment.id})}" method="post" style="display:inline;">-->
+<!--        <input type="hidden" name="_method" value="delete" /> &lt;!&ndash; HTTP 메서드 오버라이드 &ndash;&gt;-->
+<!--        <button class="btn btn-danger btn-sm" type="submit">삭제</button>-->
+<!--      </form>-->
+<!--    </div>-->
+<!--    <hr>-->
+<!--  </div>-->
+
+<!--</div> &lt;!&ndash; /container &ndash;&gt;-->
+<!--</body>-->
+<!--</html>-->
+
 <!DOCTYPE HTML>
-<html xmlns:th="http://thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
   <meta charset="utf-8">
-  <link rel="stylesheet" th:href="@{/css/boardStyles.css}" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+  <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}" />
   <style>
     .container {
-    max-width: 560px;
+      max-width: 800px; /* 최대 너비를 늘려 가독성 향상 */
     }
   </style>
 </head>
 <body>
-<div class="container">
+<div class="container mt-5">
   <div class="py-5 text-center">
     <h2>상품 상세</h2>
   </div>
 
-  <!-- -->
-  <h2 th:if="${param.status}" th:text="'저장 완료'"></h2>
-  <div>
-    <label for="boardId">게시글 번호</label>
-    <input type="text" id="boardId" name="boardId" class="form-control"
-            th:value="${board.id}" readonly>
+  <h2 th:if="${param.status}" th:text="'저장 완료'" class="alert alert-success text-center"></h2>
+
+  <div class="mb-3">
+    <label for="boardId" class="form-label">게시글 번호</label>
+    <input type="text" id="boardId" name="boardId" class="form-control" th:value="${board.id}" readonly>
   </div>
-  <div>
-    <label for="title">제목</label>
-    <input type="text" id="title" name="title" class="form-control"
-           value="제목" th:value="${board.title}" readonly>
+
+  <div class="mb-3">
+    <label for="title" class="form-label">제목</label>
+    <input type="text" id="title" name="title" class="form-control" th:value="${board.title}" readonly>
   </div>
-  <div>
-    <label for="content">내용</label>
-    <textarea type="text" id="content" name="content" class="form-control" th:text="${board.content}" readonly>
-    </textarea>
+
+  <div class="mb-3">
+    <label for="content" class="form-label">내용</label>
+    <textarea id="content" name="content" class="form-control" th:text="${board.content}" readonly></textarea>
   </div>
-  <div>
-    <label for="author">작성자</label>
-    <input type="text" id="author" name="author" class="form-control"
-           value="10" th:value="${board.author.username}" readonly>
+
+  <div class="mb-3">
+    <label for="author" class="form-label">작성자</label>
+    <input type="text" id="author" name="author" class="form-control" th:value="${board.author.username}" readonly>
   </div>
-  <div>댓글 수: <span th:text="${#lists.size(board.comments)}">0</span></div>
+
+  <div class="mb-3">댓글 수: <span th:text="${#lists.size(board.comments)}">0</span></div>
 
   <hr class="my-4">
-  <div class="row">
+
+  <div class="row mb-5">
     <div class="col" th:if="${loggedInUserId} == ${board.author.id}">
       <button class="w-100 btn btn-primary btn-lg"
               th:onclick="|location.href='@{/boards/{boardId}/edit(boardId=${board.id})}'|" type="button">상품 수정</button>
@@ -48,43 +145,46 @@
 
     <div class="col" th:if="${loggedInUserId} == ${board.author.id}">
       <form th:action="@{/boards/{boardId}/delete(boardId=${board.id})}" method="post" style="display:inline;">
-        <input type="hidden" name="_method" value="delete" /> <!-- HTTP 메서드 오버라이드 -->
+        <input type="hidden" name="_method" value="delete" />
         <button class="w-100 btn btn-danger btn-lg" type="submit">삭제</button>
       </form>
-
     </div>
+
     <div class="col">
       <button class="w-100 btn btn-secondary btn-lg"
-              onclick="location.href='items.html'"
               th:onclick="|location.href='@{/boards}'|" type="button">목록으로</button>
     </div>
   </div>
+
   <!-- 댓글 추가 폼 -->
-  <h3>댓글 추가</h3>
-  <form th:action="@{/boards/{boardId}/addComment(boardId=${board.id})}" method="post">
-    <div class="form-group">
-      <textarea name="content" class="form-control" placeholder="댓글 내용을 입력하세요." required></textarea>
-    </div>
-    <button type="submit" class="btn btn-primary">댓글 등록</button>
-  </form>
+  <div th:if="${loggedInUserId} != null">
+    <h3>댓글 추가</h3>
+    <form th:action="@{/boards/{boardId}/addComment(boardId=${board.id})}" method="post">
+      <div class="form-group mb-3">
+        <textarea name="content" class="form-control" placeholder="댓글 내용을 입력하세요." required></textarea>
+      </div>
+      <button type="submit" class="btn btn-primary">댓글 등록</button>
+    </form>
+  </div>
 
   <hr class="my-4">
 
   <!-- 댓글 목록 -->
   <h3>댓글 목록</h3>
   <div th:each="comment : ${board.comments}">
-    <div class="border p-2 mb-2">
-      <small class="comment-author" th:text="${comment.author.username}"></small>
+    <div class="border p-3 mb-3 rounded">
+      <small class="text-muted" th:text="${comment.author.username}"></small>
       <p th:text="${comment.content}"></p>
 
-      <a th:if="${loggedInUserId} == ${comment.author.id}" th:href="@{/boards/{boardId}/comments/{commentId}/edit(boardId=${board.id}, commentId=${comment.id})}" class="btn btn-secondary btn-sm">수정</a>
+      <div class="d-flex justify-content-end">
+        <a th:if="${loggedInUserId} == ${comment.author.id}" th:href="@{/boards/{boardId}/comments/{commentId}/edit(boardId=${board.id}, commentId=${comment.id})}" class="btn btn-secondary btn-sm me-2">수정</a>
 
-      <!-- 댓글 삭제 버튼 -->
-      <form th:if="${loggedInUserId} == ${comment.author.id}"
-            th:action="@{/boards/{boardId}/comments/{commentId}/delete(boardId=${board.id}, commentId=${comment.id})}" method="post" style="display:inline;">
-        <input type="hidden" name="_method" value="delete" /> <!-- HTTP 메서드 오버라이드 -->
-        <button class="btn btn-danger btn-sm" type="submit">삭제</button>
-      </form>
+        <form th:if="${loggedInUserId} == ${comment.author.id}"
+              th:action="@{/boards/{boardId}/comments/{commentId}/delete(boardId=${board.id}, commentId=${comment.id})}" method="post" style="display:inline;">
+          <input type="hidden" name="_method" value="delete" />
+          <button class="btn btn-danger btn-sm" type="submit">삭제</button>
+        </form>
+      </div>
     </div>
     <hr>
   </div>

@@ -1,48 +1,115 @@
+<!--<!DOCTYPE HTML>-->
+<!--<html xmlns:th="http://www.thymeleaf.org">-->
+<!--<head>-->
+<!--  <meta charset="utf-8">-->
+<!--  <link rel="stylesheet" th:href="@{/css/boardListStyles.css}" />-->
+<!--</head>-->
+<!--<body>-->
+<!--<div class="container" style="max-width: 600px">-->
+<!--  <div class="login">-->
+<!--    <div th:if="${logIn == false}">-->
+<!--      <a class="login-check" href="/member/login">로그인</a>-->
+<!--    </div>-->
+<!--    <div th:if="${logIn == true}">-->
+<!--      <a class="login-check" href="/member/logout">로그아웃</a>-->
+<!--      <div class="greetings">-->
+<!--        <span th:text="'안녕하세요 ' + ${username} + '님'"></span>-->
+<!--      </div>-->
+<!--    </div>-->
+<!--  </div>-->
+<!--  <div class="py-5 text-center">-->
+<!--    <h2>상품 목록</h2>-->
+<!--  </div>-->
+<!--  <div class="row add">-->
+<!--    <div class="col">-->
+<!--      <button class="btn btn-primary float-end"-->
+<!--              onclick="location.href='addForm.html'"-->
+<!--              th:onclick="|location.href='@{/boards/board/add}'|" type="button">글 등록-->
+<!--      </button>-->
+<!--    </div>-->
+<!--  </div>-->
+<!--  <hr class="my-4">-->
+<!--  <div>-->
+<!--    <table class="table">-->
+<!--      <thead>-->
+<!--      <tr>-->
+<!--        <th>id</th>-->
+<!--        <th>제목</th>-->
+<!--        <th>작성자</th>-->
+<!--        <th>내용</th>-->
+<!--        <th>댓글 수</th>-->
+<!--      </tr>-->
+<!--      </thead>-->
+<!--      <tbody>-->
+<!--      <tr th:each="board : ${boards}">-->
+<!--        <td><a href="board.html" th:href="@{/boards/{boardId}(boardId=${board.id})}" th:text="${board.id}">글 id</a></td>-->
+<!--        <td><a href="board.html" th:href="@{/boards/{boardId}(boardId=${board.id})}" th:text="${board.title}">제목</a></td>-->
+<!--        <td th:text="${board.authorName}">작성자</td>-->
+<!--        <td th:text="${board.content}">내용</td>-->
+<!--        <td th:text="${#lists.size(board.comments)}">댓글 수</td>-->
+<!--      </tr>-->
+<!--      </tbody>-->
+<!--    </table>-->
+<!--  </div>-->
+<!--</div> &lt;!&ndash; /container &ndash;&gt;-->
+<!--</body>-->
+<!--</html>-->
+
 <!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
   <meta charset="utf-8">
-  <link rel="stylesheet" th:href="@{/css/boardListStyles.css}" />
+  <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}" />
+  <style>
+    .container {
+      max-width: 800px;
+    }
+    .login-check {
+      margin-right: 15px;
+    }
+  </style>
 </head>
 <body>
-<div class="container" style="max-width: 600px">
-  <div class="login">
+<div class="container mt-5">
+  <div class="d-flex justify-content-end mb-3">
     <div th:if="${logIn == false}">
-      <a class="login-check" href="/member/login">로그인</a>
+      <a class="btn btn-outline-primary" href="/member/login">로그인</a>
     </div>
-    <div th:if="${logIn == true}">
-      <a class="login-check" href="/member/logout">로그아웃</a>
-      <div class="greetings">
-        <span th:text="'안녕하세요 ' + ${username} + '님'"></span>
-      </div>
+    <div th:if="${logIn == true}" class="d-flex align-items-center mb-3">
+      <span class="greetings mr-3" th:text="'안녕하세요, ' + ${username} + '님'"></span>
+      <a class="btn btn-outline-danger btn-sm" href="/member/logout">로그아웃</a>
     </div>
   </div>
+
   <div class="py-5 text-center">
     <h2>상품 목록</h2>
   </div>
-  <div class="row add">
-    <div class="col">
-      <button class="btn btn-primary float-end"
+
+  <div class="row mb-3">
+    <div class="col text-end">
+      <button class="btn btn-primary"
               onclick="location.href='addForm.html'"
               th:onclick="|location.href='@{/boards/board/add}'|" type="button">글 등록
       </button>
     </div>
   </div>
+
   <hr class="my-4">
+
   <div>
-    <table class="table">
-      <thead>
+    <table class="table table-striped">
+      <thead class="table-light">
       <tr>
-        <th>id</th>
-        <th>제목</th>
-        <th>작성자</th>
-        <th>내용</th>
-        <th>댓글 수</th>
+        <th scope="col">ID</th>
+        <th scope="col">제목</th>
+        <th scope="col">작성자</th>
+        <th scope="col">내용</th>
+        <th scope="col">댓글 수</th>
       </tr>
       </thead>
       <tbody>
       <tr th:each="board : ${boards}">
-        <td><a href="board.html" th:href="@{/boards/{boardId}(boardId=${board.id})}" th:text="${board.id}">글 id</a></td>
+        <td><a href="board.html" th:href="@{/boards/{boardId}(boardId=${board.id})}" th:text="${board.id}">글 ID</a></td>
         <td><a href="board.html" th:href="@{/boards/{boardId}(boardId=${board.id})}" th:text="${board.title}">제목</a></td>
         <td th:text="${board.authorName}">작성자</td>
         <td th:text="${board.content}">내용</td>

@@ -1,37 +1,92 @@
+<!--<!DOCTYPE HTML>-->
+<!--<html xmlns:th="http://www.thymeleaf.org">-->
+<!--<head>-->
+<!--  <meta charset="utf-8">-->
+<!--  <link href="../css/bootstrap.min.css" rel="stylesheet">-->
+<!--  <style>-->
+<!--    .container {-->
+<!--      max-width: 560px;-->
+<!--    }-->
+<!--  </style>-->
+<!--</head>-->
+<!--<body>-->
+<!--<div class="container">-->
+<!--  <div class="py-5 text-center">-->
+<!--    <h2>게시글 수정 폼</h2>-->
+<!--  </div>-->
+<!--  <form th:action="@{/boards/{boardId}/edit(boardId=${board.id})}" method="post" th:object="${board}">-->
+<!--    <div>-->
+<!--      <label for="id">게시글 번호</label>-->
+<!--      <input type="text" id="id" name="id" class="form-control" th:value="*{id}" readonly>-->
+<!--    </div>-->
+<!--    <div>-->
+<!--      <label for="title">제목</label>-->
+<!--      <input type="text" id="title" name="title" class="form-control" th:value="*{title}">-->
+<!--    </div>-->
+<!--    <div>-->
+<!--      <label for="content">내용</label>-->
+<!--      <textarea id="content" name="content" class="form-control" th:utext="*{content}"></textarea>-->
+<!--    </div>-->
+<!--    <div>-->
+<!--      <label for="author">작성자</label>-->
+<!--      <input type="text" id="author" name="author" class="form-control" th:value="${board.authorName}" readonly>-->
+<!--    </div>-->
+<!--    <hr class="my-4">-->
+<!--    <div class="row">-->
+<!--      <div class="col">-->
+<!--        <button class="w-100 btn btn-primary btn-lg" type="submit">저장</button>-->
+<!--      </div>-->
+<!--      <div class="col">-->
+<!--        <button class="w-100 btn btn-secondary btn-lg" th:onclick="'location.href=\'/boards\''" type="button">취소</button>-->
+<!--      </div>-->
+<!--    </div>-->
+<!--  </form>-->
+<!--</div> &lt;!&ndash; /container &ndash;&gt;-->
+<!--</body>-->
+<!--</html>-->
+
+
 <!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
   <meta charset="utf-8">
-  <link href="../css/bootstrap.min.css" rel="stylesheet">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+  <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}" />
   <style>
     .container {
-      max-width: 560px;
+      max-width: 600px; /* 최대 너비 설정 */
     }
   </style>
 </head>
-<body>
-<div class="container">
+<body class="bg-light">
+<div class="container mt-5">
   <div class="py-5 text-center">
-    <h2>게시글 수정 폼</h2>
+    <h2>게시글 수정</h2>
   </div>
+
   <form th:action="@{/boards/{boardId}/edit(boardId=${board.id})}" method="post" th:object="${board}">
-    <div>
-      <label for="id">게시글 번호</label>
+    <div class="mb-3">
+      <label for="id" class="form-label">게시글 번호</label>
       <input type="text" id="id" name="id" class="form-control" th:value="*{id}" readonly>
     </div>
-    <div>
-      <label for="title">제목</label>
-      <input type="text" id="title" name="title" class="form-control" th:value="*{title}">
+
+    <div class="mb-3">
+      <label for="title" class="form-label">제목</label>
+      <input type="text" id="title" name="title" class="form-control" th:value="*{title}" required>
     </div>
-    <div>
-      <label for="content">내용</label>
-      <textarea id="content" name="content" class="form-control" th:utext="*{content}"></textarea>
+
+    <div class="mb-3">
+      <label for="content" class="form-label">내용</label>
+      <textarea id="content" name="content" class="form-control" th:utext="*{content}" required></textarea>
     </div>
-    <div>
-      <label for="author">작성자</label>
+
+    <div class="mb-3">
+      <label for="author" class="form-label">작성자</label>
       <input type="text" id="author" name="author" class="form-control" th:value="${board.authorName}" readonly>
     </div>
+
     <hr class="my-4">
+
     <div class="row">
       <div class="col">
         <button class="w-100 btn btn-primary btn-lg" type="submit">저장</button>

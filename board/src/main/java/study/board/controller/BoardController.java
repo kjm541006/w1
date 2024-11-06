@@ -106,7 +106,14 @@ public class BoardController {
     public String getBoardById(Model model, @PathVariable Long boardId, HttpSession session){
         log.info("boardId = " + boardId);
         Board board = boardService.getBoardById(boardId).orElseThrow(()-> new RuntimeException("Not Found"));
-        Long loggedInUserId = ((Member) session.getAttribute("loggedInUser")).getId();
+        // Long loggedInUserId = ((Member) session.getAttribute("loggedInUser")).getId();
+
+        Long loggedInUserId = null;
+
+        Member loggedInUser = (Member) session.getAttribute("loggedInUser");
+        if (loggedInUser != null) {
+            loggedInUserId = loggedInUser.getId();
+        }
 
         log.info("Board: {}", board);
         log.info("Author: {}", board.getAuthor()); // author 객체 확인
