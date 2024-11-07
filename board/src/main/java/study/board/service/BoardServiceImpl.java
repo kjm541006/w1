@@ -12,6 +12,7 @@ import study.board.entity.Board;
 import study.board.entity.Member;
 import study.board.repository.BoardRepository;
 
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -48,7 +49,8 @@ public class BoardServiceImpl implements BoardService{
                             .map(comment -> new CommentDTO(comment.getId(), comment.getContent()))
                             .collect(Collectors.toList());
 
-                    return new BoardDTO(board.getId(), board.getTitle(), board.getContent(), authorName, commentDTOs);
+                    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+                    return new BoardDTO(board.getId(), board.getTitle(), board.getContent(), board.getCreatedAt().format(formatter), authorName, commentDTOs);
                 })
                 .collect(Collectors.toList());
     }

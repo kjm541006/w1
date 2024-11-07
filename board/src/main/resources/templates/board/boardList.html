@@ -103,7 +103,7 @@
         <th scope="col">ID</th>
         <th scope="col">제목</th>
         <th scope="col">작성자</th>
-        <th scope="col">내용</th>
+        <th scope="col">작성 시간</th>
         <th scope="col">댓글 수</th>
       </tr>
       </thead>
@@ -112,7 +112,7 @@
         <td><a href="board.html" th:href="@{/boards/{boardId}(boardId=${board.id})}" th:text="${board.id}">글 ID</a></td>
         <td><a href="board.html" th:href="@{/boards/{boardId}(boardId=${board.id})}" th:text="${board.title}">제목</a></td>
         <td th:text="${board.authorName}">작성자</td>
-        <td th:text="${board.content}">내용</td>
+        <td th:text="${board.createdAt}">작성 시간</td>
         <td th:text="${#lists.size(board.comments)}">댓글 수</td>
       </tr>
       </tbody>
